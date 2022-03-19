@@ -1,13 +1,22 @@
-import React from 'react'
+import { React, useState, useEffect} from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Image, Button, Card, ListGroup, Row, Col } from 'react-bootstrap'
-import imageInfo from '../imageInfo'
-import { propTypes } from 'google-map-react'
+import axios from 'axios'
 
 
 function ImageScreen() {
+
+    const [image, setImage] = useState([])
     let params = useParams();
-    const image = imageInfo.find((image) => image._id === params.id)
+    
+    useEffect(() => {
+        async function fetchImage() {
+            const response = await axios.get(`/api/images/${params.id}`)
+            setImage(response.data)
+        }
+        fetchImage()
+    }, [])
+
     return(
         <div>
             <Link to='/' className='btn btn-light my-3'>Back</Link>
@@ -30,11 +39,11 @@ function ImageScreen() {
                             Tagged faces: {image.taggedFace}
                         </ListGroup.Item>
 
-                        {image.taggedFaces.map(face => (
-                            <ListGroup.Item>
+                        {image.taggedFaces ? image.taggedFaces.map(face => (
+                            <ListGroup.Item key={face}>
                                 {face}
                             </ListGroup.Item>
-                        ))}
+                        )) : null }
                     </ListGroup>
                 </Col>
             </Row>

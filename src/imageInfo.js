@@ -13,7 +13,7 @@ const imageInfo = [
         'filePath': '/images/infinity_war_1.jpg',
         'taggedFace': '4',
         'totalFace': '5',
-        'taggedFaces': ['Black Panther', 'Black Widow', 'Winter Soldier', 'Captain America']
+        'taggedFaces': ['Black Panther', 'Black Widow', 'Winter Soldier']
     },
 ]
 
