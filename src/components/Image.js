@@ -6,7 +6,7 @@ function Image({image}) {
     return (
         <Card className="my-3 p-3 rounded">
             <Link to={`/images/${image._id}`}>
-                <Card.Img src={image.filePath}/>
+                <Card.Img src={image.image}/>
             </Link>
             <Card.Body>
                 <Link to={`/images/${image._id}`}>
@@ -17,7 +17,7 @@ function Image({image}) {
 
                 <Card.Text as="div">
                     <div className="my-3">
-                        {image.taggedFace} out of {image.totalFace} faces tagged
+                        {image.total_faces} out of {image.tagged_faces} faces tagged
                     </div>
                 </Card.Text>
 
@@ -27,13 +27,15 @@ function Image({image}) {
                     </div>
                 </Card.Text>
 
-                {image.taggedFaces.map(face => (
-                    <Card.Text as="div">
-                        <div className="my-1">
-                            {face}
-                        </div>
-                    </Card.Text>
-                ))}
+                {image.tagged ? 
+                    image.tagged_faces.map(face => (
+                        <Card.Text as="div">
+                            <div className="my-1">
+                                {face}
+                            </div>
+                        </Card.Text>
+                    )) : null
+                }
             </Card.Body>
         </Card>
     )

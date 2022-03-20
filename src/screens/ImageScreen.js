@@ -22,7 +22,7 @@ function ImageScreen() {
             <Link to='/' className='btn btn-light my-3'>Back</Link>
             <Row>
                 <Col md={6}>
-                    <Image src={image.filePath} alt={image.name} fluid/>
+                    <Image src={image.image} alt={image.name} fluid/>
                 </Col>
 
                 <Col md={3}>
@@ -32,18 +32,13 @@ function ImageScreen() {
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            Identified faces: {image.totalFace} 
+                            Identified faces: {image.total_faces} 
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            Tagged faces: {image.taggedFace}
+                            Tagged faces: {image.tagged_faces}
                         </ListGroup.Item>
 
-                        {image.taggedFaces ? image.taggedFaces.map(face => (
-                            <ListGroup.Item key={face}>
-                                {face}
-                            </ListGroup.Item>
-                        )) : null }
                     </ListGroup>
                 </Col>
             </Row>
