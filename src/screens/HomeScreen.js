@@ -1,31 +1,35 @@
 import {React, useState, useEffect} from 'react'
 import { Row, Col } from 'react-bootstrap'
-// import imageInfo from '../imageInfo'
 import axios from 'axios' 
 import Image from '../components/Image'
 
-function HomeScreen() {
+import { useDispatch, useSelector } from 'react-redux'
+import listPhotos from '../actions/photoActions'
 
-    const [images, setImages] = useState([])
+function HomeScreen() {
+    const dispatch = useDispatch()
+    const photoList = useSelector(state => state.photoList)
+    const { error, loading, photos} = photoList
 
     useEffect(() => {
-        async function fetchImages() {
-            const response = await axios.get('/api/images')
-            setImages(response.data)
-        }
-        fetchImages()
-    }, [])
+        dispatch(listPhotos())
+    }, [dispatch])
     
     return (
         <div>
             <h1>All Photos</h1>
-            <Row>
-                {images.map(image => (
-                    <Col key={image._id} sm={12} md={6} lg={4} xl={3}> 
-                        <Image image={image}/> 
-                    </Col>
-                ))}
-            </Row>
+            {loading ? <h2>Loading...</h2>
+                : error ? <h3>{error}</h3>
+                    :
+                    <Row>
+                        {photos.map(photo => (
+                            <Col key={photo._id} sm={12} md={6} lg={4} xl={3}> 
+                                <Image image={photo}/> 
+                            </Col>
+                        ))}
+                    </Row>
+            }
+            
         </div>
     )
 }
