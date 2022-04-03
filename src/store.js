@@ -1,10 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { photoListReducer } from './reducers/photoReducers'
+import { photoListReducer, photoDetailsReducer } from './reducers/photoReducers'
 
 const reducer = combineReducers({ // reducers to be added later as key:val pairs
-    photoList: photoListReducer
+    photoList: photoListReducer,
+    photoDetails: photoDetailsReducer
 }) 
 const initialState = {}
 

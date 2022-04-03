@@ -2,9 +2,11 @@ import {React, useState, useEffect} from 'react'
 import { Row, Col } from 'react-bootstrap'
 import axios from 'axios' 
 import Image from '../components/Image'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
 import { useDispatch, useSelector } from 'react-redux'
-import listPhotos from '../actions/photoActions'
+import {listPhotos} from '../actions/photoActions'
 
 function HomeScreen() {
     const dispatch = useDispatch()
@@ -18,8 +20,8 @@ function HomeScreen() {
     return (
         <div>
             <h1>All Photos</h1>
-            {loading ? <h2>Loading...</h2>
-                : error ? <h3>{error}</h3>
+            {loading ?  <Loader/> 
+                : error ? <Message>{error}</Message>
                     :
                     <Row>
                         {photos.map(photo => (

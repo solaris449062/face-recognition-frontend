@@ -1,47 +1,56 @@
 import { React, useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { Image, Button, Card, ListGroup, Row, Col } from 'react-bootstrap'
-import axios from 'axios'
-
+import { listPhotoDetails } from '../actions/photoActions'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
 function ImageScreen() {
-
-    const [image, setImage] = useState([])
-    let params = useParams();
+    const dispatch = useDispatch()
+    const photoDetails = useSelector(state => state.photoDetails)
+    const { loading, error, photo } = photoDetails
+    let params = useParams()
     
     useEffect(() => {
-        async function fetchImage() {
-            const response = await axios.get(`/api/images/${params.id}`)
-            setImage(response.data)
-        }
-        fetchImage()
-    }, [])
+            dispatch(listPhotoDetails(params.id))
+        
+    }, [dispatch, params])
+
 
     return(
         <div>
             <Link to='/' className='btn btn-light my-3'>Back</Link>
-            <Row>
-                <Col md={6}>
-                    <Image src={image.image} alt={image.name} fluid/>
-                </Col>
+            { loading
+                ? <Loader/>
+                : error 
+                    ? <Message> { error } </Message>
+                    :(
+                        <Row>
+                            <Col md={6}>
+                                <Image src={photo.image} alt={photo.name} fluid/>
+                            </Col>
 
-                <Col md={3}>
-                    <ListGroup variant="flush">
-                        <ListGroup.Item>
-                            <h3>{image.name}</h3>
-                        </ListGroup.Item>
+                            <Col md={3}>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item>
+                                        <h3>{photo.name}</h3>
+                                    </ListGroup.Item>
 
-                        <ListGroup.Item>
-                            Identified faces: {image.total_faces} 
-                        </ListGroup.Item>
+                                    <ListGroup.Item>
+                                        Identified faces: {photo.total_faces} 
+                                    </ListGroup.Item>
 
-                        <ListGroup.Item>
-                            Tagged faces: {image.tagged_faces}
-                        </ListGroup.Item>
+                                    <ListGroup.Item>
+                                        Tagged faces: {photo.tagged_faces}
+                                    </ListGroup.Item>
 
-                    </ListGroup>
-                </Col>
-            </Row>
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                    )
+                } 
+
         </div>
     )
 }
