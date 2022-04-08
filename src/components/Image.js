@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 function Image({image}) {
     return (
         <Card className="my-3 p-3 rounded">
-            <Link to={`/images/${image._id}`}>
+            <Link to={`/photos/${image._id}`}>
                 <Card.Img src={image.image}/>
             </Link>
             <Card.Body>
-                <Link to={`/images/${image._id}`}>
+                <Link to={`/photos/${image._id}`}>
                     <Card.Title as="div">
                         <strong>{image.name}</strong>
                     </Card.Title>
