@@ -41,15 +41,8 @@ export const login = (email, password) => async (dispatch) => {
     }
 }
 
-// export const logout = () => (dispatch) => {
-//     localStorage.removeItem('userInfo')
-//     dispatch({
-//         type: USER_LOGOUT
-//     })
-// }
-
-export function logout() {
-    (dispatch) => {
+export function logout() { // nested arrow function can be rewritten in this manner as well
+    return function(dispatch) {
         localStorage.removeItem('userInfo')
         dispatch({
             type: USER_LOGOUT

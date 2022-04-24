@@ -9,8 +9,11 @@ import {
     PHOTO_DETAILS_FAIL
 } from '../constants/photoConstants'
 
+
 export const listPhotos = () => async (dispatch) => {
+
     try {
+        console.log(dispatch)
         dispatch({ type: PHOTO_LIST_REQUEST })
         const { data } = await axios.get('/api/photos/')
         dispatch({
